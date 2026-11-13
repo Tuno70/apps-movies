@@ -1,67 +1,384 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUNO SISTEMAS - Descarga</title>
-    <!-- Incluimos Tailwind CSS para los estilos modernos y responsivos -->
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        /* Animación suave para el fondo */
         body {
             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
         }
+
+        .pin-dot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .pin-dot.active {
+            background: #2563eb;
+            transform: scale(1.15);
+        }
+
+        .keypad-btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 21px;
+            font-weight: 700;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+
+        .keypad-btn:hover,
+        .keypad-btn:focus {
+            background: #dbeafe;
+            border-color: #93c5fd;
+            outline: none;
+            transform: scale(1.04);
+        }
+
+        .keypad-btn:active {
+            transform: scale(0.95);
+        }
+
+        .modal {
+            animation: appear 0.2s ease-out;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex items-center justify-center p-4 font-sans text-gray-800">
 
-    <!-- Contenedor principal estilo tarjeta -->
+    <!-- TARJETA PRINCIPAL -->
+
     <div class="bg-white rounded-3xl shadow-xl p-8 max-w-sm w-full text-center border border-gray-100">
-        
-        <!-- Título de tu marca -->
+
         <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 mb-8 uppercase">
             TUNO SISTEMAS
         </h1>
 
-        <!-- Información de la App -->
+        <!-- ICONO -->
+
         <div class="mb-8">
-            <!-- Ícono decorativo de una app móvil -->
+
             <div class="w-24 h-24 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-blue-100">
-                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+
+                <svg class="w-12 h-12" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="1.5"
+                          d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
+                    </path>
                 </svg>
+
             </div>
-            
-            <h2 class="text-xl font-bold text-gray-800">PELICULAS, SERIES Y TV</h2>
+
+            <h2 class="text-xl font-bold text-gray-800">
+                PELICULAS, SERIES Y TV
+            </h2>
+
         </div>
 
-        <!-- Botón de Descarga actualizado para Fire TV -->
-        <a href="Xuper_TV (1).apk" download="Xuper_TV (1).apk" target="_blank" onclick="forzarDescarga(event, this.href)"
-           class="group relative inline-flex items-center justify-center w-full px-6 py-4 text-base font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200 ease-in-out shadow-md hover:shadow-lg active:scale-95">
-            
-            <!-- Ícono de flecha de descarga -->
-            <svg class="w-6 h-6 mr-2 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-            DESCARGAR
-        </a>
+        <!-- BOTON DESCARGAR -->
 
-        <!-- Nota informativa inferior -->
+        <button id="downloadBtn"
+            onclick="abrirModal()"
+            class="group inline-flex items-center justify-center w-full px-6 py-4 text-base font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200 shadow-md hover:shadow-lg active:scale-95">
+
+            <svg class="w-6 h-6 mr-2" fill="none"
+                 stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
+                </path>
+            </svg>
+
+            DESCARGAR
+
+        </button>
+
         <p class="mt-5 text-xs text-gray-400">
-            Asegúrate de permitir la instalación de orígenes desconocidos en tu dispositivo Android.
+            Asegúrate de permitir la instalación de orígenes desconocidos
+            en tu dispositivo Android.
         </p>
 
     </div>
 
+
+    <!-- VENTANA DE VERIFICACION -->
+
+    <div id="pinModal"
+         class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+
+        <div class="modal bg-white rounded-3xl shadow-2xl p-7 max-w-xs w-full text-center">
+
+            <!-- ICONO CANDADO -->
+
+            <div class="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-4">
+
+                <svg class="w-8 h-8" fill="none"
+                     stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          stroke-width="1.8"
+                          d="M12 15v2m-6 4h12a2 2 0 002-2v-7a2 2 0 00-2-2H6a2 2 0 00-2 2v7a2 2 0 002 2zm3-11V7a3 3 0 016 0v4">
+                    </path>
+                </svg>
+
+            </div>
+
+            <h3 class="text-xl font-extrabold text-gray-900">
+                Verificación de acceso
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-2 mb-6">
+                Introduce tu código de acceso de 4 dígitos.
+            </p>
+
+            <!-- INDICADORES DEL PIN -->
+
+            <div class="flex justify-center gap-4 mb-5" id="pinDots">
+
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+
+            </div>
+
+            <!-- MENSAJE -->
+
+            <p id="errorMsg"
+               class="text-red-500 text-xs font-semibold mb-3"
+               aria-live="polite">
+            </p>
+
+            <!-- TECLADO NUMERICO -->
+
+            <div class="grid grid-cols-3 gap-3">
+
+                <button class="keypad-btn" onclick="agregarNumero('1')">1</button>
+                <button class="keypad-btn" onclick="agregarNumero('2')">2</button>
+                <button class="keypad-btn" onclick="agregarNumero('3')">3</button>
+
+                <button class="keypad-btn" onclick="agregarNumero('4')">4</button>
+                <button class="keypad-btn" onclick="agregarNumero('5')">5</button>
+                <button class="keypad-btn" onclick="agregarNumero('6')">6</button>
+
+                <button class="keypad-btn" onclick="agregarNumero('7')">7</button>
+                <button class="keypad-btn" onclick="agregarNumero('8')">8</button>
+                <button class="keypad-btn" onclick="agregarNumero('9')">9</button>
+
+                <button class="keypad-btn text-red-500" onclick="borrarPIN()">⌫</button>
+                <button class="keypad-btn" onclick="agregarNumero('0')">0</button>
+                <button class="keypad-btn text-blue-600" onclick="verificarPIN()">✓</button>
+
+            </div>
+
+            <!-- CERRAR -->
+
+            <button onclick="cerrarModal()"
+                class="mt-6 text-sm text-gray-400 hover:text-gray-700 font-medium">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- FUNCIONES -->
+
     <script>
-        // Función para forzar la descarga en navegadores restrictivos como los de Fire TV
-        function forzarDescarga(e, url) {
-            // Intentamos redirigir la ventana directamente al archivo después de un pequeño retraso.
-            // A veces esto engaña al WebView del Fire TV para que lance su gestor de descargas.
-            setTimeout(function() {
-                window.location.href = url;
-            }, 150);
+
+        // =====================================
+        // CODIGOS DE ACCESO AUTORIZADOS
+        // =====================================
+
+        const codigosAutorizados = [
+            "2580",
+            "7391",
+            "4268",
+            "8153",
+            "6042",
+            "1937"
+        ];
+
+        // ENLACE DE DESCARGA
+
+        const enlaceAPK =
+            "https://github.com/Tuno70/apps-movies/releases/latest/download/Xuper.Hydra.HDR.4KP.apk";
+
+        let pinIngresado = "";
+
+        // ABRIR VENTANA
+
+        function abrirModal() {
+
+            pinIngresado = "";
+
+            actualizarIndicadores();
+
+            document.getElementById("errorMsg").textContent = "";
+
+            document.getElementById("pinModal").classList.remove("hidden");
+
+            document.querySelector(".keypad-btn").focus();
+
         }
+
+        // CERRAR VENTANA
+
+        function cerrarModal() {
+
+            document.getElementById("pinModal").classList.add("hidden");
+
+            pinIngresado = "";
+
+        }
+
+        // AGREGAR NUMERO
+
+        function agregarNumero(numero) {
+
+            if (pinIngresado.length >= 4) return;
+
+            pinIngresado += numero;
+
+            actualizarIndicadores();
+
+            if (pinIngresado.length === 4) {
+
+                setTimeout(verificarPIN, 250);
+
+            }
+
+        }
+
+        // BORRAR NUMERO
+
+        function borrarPIN() {
+
+            pinIngresado = pinIngresado.slice(0, -1);
+
+            document.getElementById("errorMsg").textContent = "";
+
+            actualizarIndicadores();
+
+        }
+
+        // ACTUALIZAR INDICADORES
+
+        function actualizarIndicadores() {
+
+            const puntos = document.querySelectorAll(".pin-dot");
+
+            puntos.forEach((punto, index) => {
+
+                punto.classList.toggle(
+                    "active",
+                    index < pinIngresado.length
+                );
+
+            });
+
+        }
+
+        // VERIFICAR PIN
+
+        function verificarPIN() {
+
+            if (pinIngresado.length !== 4) {
+
+                document.getElementById("errorMsg").textContent =
+                    "Introduce los 4 dígitos.";
+
+                return;
+
+            }
+
+            if (codigosAutorizados.includes(pinIngresado)) {
+
+                document.getElementById("errorMsg").textContent =
+                    "Código correcto. Preparando descarga...";
+
+                document.getElementById("errorMsg").className =
+                    "text-green-600 text-xs font-semibold mb-3";
+
+                window.location.href = enlaceAPK;
+
+                cerrarModal();
+
+            } else {
+
+                document.getElementById("errorMsg").textContent =
+                    "Código incorrecto. Inténtalo nuevamente.";
+
+                pinIngresado = "";
+
+                actualizarIndicadores();
+
+            }
+
+        }
+
+        // SOPORTE PARA TECLADO FISICO Y FIRE TV
+
+        document.addEventListener("keydown", function(e) {
+
+            const modal = document.getElementById("pinModal");
+
+            if (modal.classList.contains("hidden")) return;
+
+            if (/^[0-9]$/.test(e.key)) {
+
+                e.preventDefault();
+                agregarNumero(e.key);
+
+            }
+
+            if (e.key === "Backspace") {
+
+                e.preventDefault();
+                borrarPIN();
+
+            }
+
+            if (e.key === "Enter") {
+
+                e.preventDefault();
+                verificarPIN();
+
+            }
+
+            if (e.key === "Escape") {
+
+                cerrarModal();
+
+            }
+
+        });
+
     </script>
+
 </body>
 </html>
+```
